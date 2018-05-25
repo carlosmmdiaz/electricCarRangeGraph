@@ -4,13 +4,18 @@ import { Component,
          AfterContentInit } from '@angular/core';
 import * as d3 from 'd3';
 
+interface Car {
+  image: string;
+  range: number;
+}
+
 @Component({
   selector: 'app-electric-range-graph',
   template: `<svg class="svg-container"></svg>`,
 })
 
 export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
-  private carsRange: any;
+  private carsRange: Car[];
   private transition: d3.Transition<any, any, any, any>;
   private animationDelay: number;
   private svgWidth: number;
@@ -23,6 +28,7 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
   private svg: any;
   private xScale: any;
   private xAxe: any;
+
 
   constructor() { }
 
@@ -43,6 +49,18 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
       {
         'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
         'range': 410
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
+        'range': 510
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
+        'range': 610
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
+        'range': 710
       }
     ];
     this.svgHeigh = 250;
@@ -53,9 +71,10 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
     this.barHeight = this.getBarHeight();
     this.animationDelay = 350;
     this.fontSize = 12;
+    const maxRangeValue = Math.max.apply(Math, this.carsRange.map(function(o) {return o.range; }));
     // D3 setup:
     this.transition = d3.transition().duration(this.animationDelay).ease(d3.easeLinear);
-    this.xScale = d3.scaleLinear().domain([0, d3.max(this.carsRange) + 50]).range([0, this.svgWidth - this.rightPadding]);
+    this.xScale = d3.scaleLinear().domain([0, maxRangeValue + 50]).range([0, this.svgWidth - this.rightPadding]);
     this.xAxe = d3.axisBottom(this.xScale);
     this.svg = d3.select('.svg-container')
                   .attr('width', this.svgWidth)
@@ -96,27 +115,27 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
         .transition()
         .delay((d, i) => i * this.animationDelay)
         .duration(600)
-        .attr('width', (d) => this.xScale(d))
-        .text((d) => d);
+        .attr('width', (d) => this.xScale(d.range))
+        .text((d) => d.range);
 
     pencil.append('text')
-        .attr('x', (d) => this.xScale(d) - (d + ' km').length * 2 - 30)
+        .attr('x', (d) => this.xScale(d.range) - (d.range + ' km').length * 2 - 30)
         .attr('y', (d, i) => this.barHeight * i + this.fontSize + 2 + i * this.barPadding)
         .attr('font-family', 'sans-serif')
         .attr('font-size', this.fontSize)
         .attr('fill', 'white')
-        .text((d) => d + ' Km');
+        .text((d) => d.range + ' Km');
 
     pencil.append('svg:image')
         .attr('x', (d) => 0)
         .attr('y', (d, i) => this.barHeight * i + i * this.barPadding)
         .attr('width', this.barHeight)
         .attr('height', this.barHeight)
-        .attr('xlink:href', 'http://carlosmmdiaz.es/resources/img/skills/angularjs.png')
+        .attr('xlink:href', (d) => d.image)
         .transition()
         .delay((d, i) => i * this.animationDelay)
         .duration(600)
-        .attr('x', (d) => this.xScale(d));
+        .attr('x', (d) => this.xScale(d.range));
   }
 }
 
