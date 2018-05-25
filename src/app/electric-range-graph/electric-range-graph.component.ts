@@ -7,6 +7,8 @@ import * as d3 from 'd3';
 interface Car {
   image: string;
   range: number;
+  brand: string;
+  model: string;
 }
 
 @Component({
@@ -43,24 +45,28 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
   private graphSetup() {
     this.carsRange = [
       {
-      'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
-      'range': 210
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/gb/400/CITROEN/C-ZERO/6634_CITYCAR-5-DOORS/citroen-c-zero-side-view.png',
+        'range': 100,
+        'brand': 'Citroën',
+        'model': ' C-Zéro'
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/HYUNDAI/IONIQ/7020_BERLINA-5-PUERTAS/hyundai-ioniq-side-view.png',
+        'range': 200,
+        'brand': 'Hyundai',
+        'model': 'Ioniq Electric'
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/NISSAN/LEAF/31867_HATCHBACK-5-DOORS/nissan-leaf-2018.png',
+        'range': 270,
+        'brand': 'Nissan',
+        'model': 'Leaf 2018 40 kWh'
       },
       {
         'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
-        'range': 410
-      },
-      {
-        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
-        'range': 510
-      },
-      {
-        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
-        'range': 610
-      },
-      {
-        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
-        'range': 710
+        'range': 300,
+        'brand': 'Renault',
+        'model': 'Zoe'
       }
     ];
     this.svgHeigh = 250;
