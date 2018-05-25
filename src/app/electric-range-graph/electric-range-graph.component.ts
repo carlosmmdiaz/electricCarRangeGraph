@@ -126,11 +126,31 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
 
     pencil.append('text')
         .attr('x', (d) => this.xScale(d.range) - (d.range + ' km').length * 2 - 30)
-        .attr('y', (d, i) => this.barHeight * i + this.fontSize + 2 + i * this.barPadding)
+        .attr('y', (d, i) => {
+          if (i === 0) {
+            return this.barHeight / 2 + this.fontSize / 2;
+          } else {
+            return ((this.barHeight * i) + (this.barPadding * i) + (this.fontSize / 2) + (this.barHeight / 2));
+          }
+        })
         .attr('font-family', 'sans-serif')
         .attr('font-size', this.fontSize)
         .attr('fill', 'white')
         .text((d) => d.range + ' Km');
+
+      pencil.append('text')
+        .attr('x', 5)
+        .attr('y', (d, i) => {
+          if (i === 0) {
+            return this.barHeight / 2 + this.fontSize / 2;
+          } else {
+            return ((this.barHeight * i) + (this.barPadding * i) + (this.fontSize / 2) + (this.barHeight / 2));
+          }
+        })
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', this.fontSize)
+        .attr('fill', 'white')
+        .text((d) => d.brand + ' ' + d.model);
 
     pencil.append('svg:image')
         .attr('x', (d) => 0)
@@ -141,7 +161,7 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
         .transition()
         .delay((d, i) => i * this.animationDelay)
         .duration(600)
-        .attr('x', (d) => this.xScale(d.range));
+        .attr('x', (d) => this.xScale(d.range) + 10);
   }
 }
 
