@@ -35,10 +35,16 @@ export class ElectricRangeGraphComponent implements OnInit, AfterContentInit {
   }
   // Private functions:
   private graphSetup() {
-    this.carsRange = [{
+    this.carsRange = [
+      {
       'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
       'range': 210
-    }];
+      },
+      {
+        'image': 'https://cdn.drivek.it/configurator-icon/cars/es/400/RENAULT/ZOE/31529_BERLINA-5-PUERTAS/renault-zoe-side-view.png',
+        'range': 410
+      }
+    ];
     this.svgHeigh = 250;
     this.svgWidth = 500;
     this.barPadding = 10;
